@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                           text: 'Age: ',
                           style: TextStyle(color: Colors.white),
                           children: [
-                            TextSpan(text: ' ... '),
+                            TextSpan(text: ' ...'),
                           ],
                         ),
                       ),
@@ -164,6 +164,7 @@ class _FormulaireState extends State<Formulaire> {
   bool isChecked1 = false;
   bool isChecked2 = false;
   DateTime _selectedDate = DateTime.now();
+  DateTime now = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -321,7 +322,7 @@ class _FormulaireState extends State<Formulaire> {
     DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
-      firstDate: DateTime(2000),
+      firstDate: DateTime(1920),
       lastDate: DateTime(2100),
     );
 
