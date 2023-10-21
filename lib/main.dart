@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +33,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? path;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -130,6 +134,16 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(28, 8, 28, 8),
+                child: SizedBox(
+                  height: 200,
+                  child: path == null
+                      ? Image.network(
+                          'https://images.pexels.com/photos/3011842/pexels-photo-3011842.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load')
+                      : Image.file(File(path!)),
+                ),
+              ),
               const Padding(
                 padding: EdgeInsets.fromLTRB(28, 8, 28, 8),
                 child: Column(
@@ -142,7 +156,29 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          openGallery();
+        },
+        child: const Icon(Icons.photo_camera),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
+  }
+
+  Future<XFile?> pickimage() async {
+    final picker = ImagePicker();
+    return await picker.pickImage(source: ImageSource.gallery);
+  }
+
+  Future<String?> openGallery() async {
+    final pickedFile = await pickimage();
+    if (pickedFile != null) {
+      setState(() {
+        path = pickedFile.path;
+      });
+    }
+    return null;
   }
 }
 
